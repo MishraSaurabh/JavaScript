@@ -1,0 +1,394 @@
+<!-- learning DOM: Document object model -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Learning</title>
+    <style>
+        .bg-black{
+            background-color: black;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <div>
+      <h1 id= "title" class="heading">Dom Learning by chai and code</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta natus, vitae quod a quia quidem facere nihil sint dignissimos odio odit molestias explicabo assumenda voluptatem obcaecati quam asperiores sit ex.</p>       
+        <ul>
+           <li>one list</li>
+            <li>one list</li>
+           <li>one list</li>
+        </ul>
+    </div>
+
+</body>
+</html>
+
+<!-- ✅ DOM (Document Object Model) - Full Notes -->
+
+<!-- What is DOM?
+The DOM is a programming interface that represents the structure of an HTML or XML document as a tree of objects (nodes).
+JavaScript uses the DOM to dynamically access and manipulate content, structure, and style.
+
+🧠 Think of DOM as a bridge between HTML and JavaScript.
+
+🌳 DOM Tree Structure:
+- window                      → The global object in the browser
+  └── document               → Represents the entire HTML document
+      └── html               → The root of the document
+          ├── head           → Contains metadata, title, links
+          │   ├── title      → Page title (text node inside)
+          │   └── meta       → Attribute node (e.g., charset, viewport)
+          └── body           → Main content shown on page
+              └── div        → HTML containers
+                  ├── attributes     → class, id, etc.
+                  └── h1             → heading with children (text, span)
+                      └── span       → span is hidden via style
+
+✅ Use Cases of DOM:
+- Accessing and modifying HTML elements using JS
+- Changing styles dynamically via JavaScript
+- Creating, removing, or updating DOM elements
+- Handling events (e.g., click, input, submit)
+
+
+
+🎯 Node Types: types of nodes
+- Element Node       → Represents HTML tags (e.g., <div>, <h1>, <ul>) element no de can have children in between
+- Text Node          → Text inside elements (e.g., "Hello world") it cant have any childrens
+- Attribute Node     → Attributes like class="title", id="main"
+- Comment Node       → <!-- This is a comment -->
+
+<!-- 🛠️ Key DOM Methods:
+- getElementById(id)         → Selects an element by its ID (returns 1 element)
+- getElementsByClassName()   → Selects all elements with a given class (HTMLCollection)
+- getElementsByTagName()     → Selects elements with a specific tag name
+- querySelector()            → Returns the first match (uses CSS selectors)
+- querySelectorAll()         → Returns all matches (NodeList) -->
+
+
+
+<!-- // ✅ getElementById vs querySelector
+
+// 🔹 getElementById()
+// - Selects by unique ID only
+// - Syntax: document.getElementById("id")
+// - No class/tag support
+// - Returns element or null
+// - Fast & efficient for IDs
+
+// 🔹 querySelector()
+// - Selects first match using CSS selector
+// - Syntax: document.querySelector("selector")
+// - Supports ID (#), class (.), tag, etc.
+// - More flexible, slightly slower
+// - Returns first match or null -->
+
+
+
+
+
+<!-- what does getElementsByClassName() return
+
+// 🔹 getElementsByClassName()
+// - Selects all elements with the given class name
+// - Syntax: document.getElementsByClassName("className")
+// - Returns an HTMLCollection (live list, not array)
+// - Can access items using index: [0], [1], etc.
+// - If no match, returns empty collection (not null)
+
+// 🔸 Example:
+const items = document.getElementsByClassName("box");
+console.log(items[0]); // First element with class "box"
+
+
+
+
+
+🔍 DOM Inspection via Console (in browser):
+console.log(document.URL);           // Full URL of current page
+console.log(document.title);         // Title of the page
+console.log(document.domain);        // Domain name (e.g., example.com)
+console.log(document.body);          // Logs entire body content
+console.log(document.head);          // Logs entire head content
+console.log(document.cookie);        // Access cookies of the page
+console.log(document.readyState);    // Returns 'loading', 'interactive' or 'complete'
+console.log(document.location);      // Returns protocol, host, pathname, etc.
+console.log(document.forms);         // Returns HTMLCollection of all <form> elements
+console.log(document.links);         // Returns all <a> tags on the page
+
+📌 console.log() vs console.dir():
+console.log(obj) → Outputs object as HTML-like view
+console.dir(obj) → Outputs object as JS object (expandable tree structure)
+
+🧪 DOM Element Access & Manipulation:
+const element = document.getElementById('div1');  // selects by ID
+
+// Get attribute value
+console.log(element.getAttribute('id'));          // Gets value of 'id'
+
+// Set attribute value
+element.setAttribute('class', 'new-class');       // Replaces or adds class -->
+
+
+
+
+<!-- ✅ DOM Attribute Manipulation: getAttribute(), setAttribute(), removeAttribute() -->
+
+<!--
+🎯 1. getAttribute(attrName)
+- Retrieves the value of the specified attribute from an element.
+- Returns `null` if the attribute does not exist.
+
+
+<div id="myDiv" class="box" title="original title">Hello!</div>
+
+Example:
+const el = document.getElementById("myDiv");
+console.log(el.getAttribute("id"));        // "myDiv"
+console.log(el.getAttribute("class"));     // e.g., "container"
+console.log(el.getAttribute("href"));      // null (if it doesn't exist)
+-->
+
+<!--
+🎯 2. setAttribute(attrName, value)
+- Adds a new attribute or updates the value of an existing attribute.
+
+Example:
+const el = document.getElementById("myDiv");
+
+el.setAttribute("class", "highlight");     // Sets or overwrites the class
+el.setAttribute("data-user", "rahul123");  // Adds custom data attribute
+el.setAttribute("title", "Tooltip text");  // Adds a title (hover tooltip)
+-->
+
+<!--
+🎯 3. removeAttribute(attrName)
+- Removes the specified attribute from the element (if it exists).
+
+Example:
+const el = document.getElementById("myDiv");
+
+el.removeAttribute("class");      // Removes the class attribute
+el.removeAttribute("title");      // Removes the tooltip/title
+-->
+
+<!--
+✅ Example HTML:
+<div id="myDiv" class="box" title="original title"></div>
+
+✅ Example JavaScript:
+const el = document.getElementById("myDiv");
+
+console.log(el.getAttribute("class"));        // Output: "box"
+
+el.setAttribute("class", "box highlighted");  // Updates class
+el.setAttribute("data-status", "active");     // Adds new custom attribute
+
+el.removeAttribute("title");                  // Removes title from element
+-->
+
+<!--
+📌 Additional Notes:
+- Use setAttribute to work with custom attributes like `data-*`, `role`, etc.
+- `el.className` and `el.id` can also be used for common attributes, but setAttribute is more flexible.
+- Attribute names are case-insensitive, but HTML convention prefers lowercase.
+
+✅ Use getAttribute/setAttribute/removeAttribute when:
+- You need fine control over dynamic attributes in JavaScript
+- Working with custom attributes or SVG elements
+-->
+
+
+
+
+
+<!-- // Get/set inner HTML content
+console.log(element.innerHTML);                   // Gets inner HTML including tags
+element.innerHTML = 'Updated content!';           // Sets HTML with tags
+
+// Get/set visible (rendered) text only
+console.log(element.innerText);                   // Ignores display: none elements
+element.innerText = 'Visible text only!';         // Only visible content is shown
+
+// Get/set all raw text including hidden content
+console.log(element.textContent);                 // Includes hidden content
+element.textContent = 'Raw text content';         // Replaces all text (hidden or not)
+
+// Style manipulation (inline styles)
+element.style.color = 'blue';                     // Set font color
+element.style.backgroundColor = 'yellow';         // Set background
+element.style.borderRadius = '5px';               // Rounded corners
+
+// Class manipulation (without touching inline styles)
+element.classList.add('new-class');               // Add a class
+element.classList.remove('old-class');            // Remove a class
+
+🔎 innerHTML vs innerText vs textContent
+-----------------------------------------------------
+| Property     | Includes HTML Tags | Hidden Text | Speed |
+|--------------|--------------------|-------------|--------|
+| innerHTML    | ✅ Yes             | ✅ Yes       | ⚠️ Slower |
+| innerText    | ❌ No              | ❌ No        | ⚠️ Slower |
+| textContent  | ❌ No              | ✅ Yes       | ✅ Fast   |
+
+Example:
+<div id="example" style="display: none;">
+  <b>Hidden Text</b>
+</div>
+
+<script>
+  const element = document.getElementById("example");
+
+  console.log(element.innerHTML);    // "<b>Hidden Text</b>" (tags included)
+  console.log(element.innerText);    // "" (empty string — display:none)
+  console.log(element.textContent);  // "Hidden Text" (includes hidden)
+</script>
+
+🛠️ Changing HTML Elements
+
+// Change inner content of an element
+element.innerHTML = "<b>Hello</b>";
+
+// Change an attribute (e.g., id or class)
+element.setAttribute("id", "newId");
+
+// Change style using JS
+element.style.color = "red";
+
+📦 Adding / Removing Elements:
+
+document.createElement("p")         // Create a new element node
+parent.appendChild(newElement)      // Append to parent
+parent.removeChild(childElement)    // Remove from parent
+parent.replaceChild(newEl, oldEl)   // Replace old with new
+document.write("Hello")             // Avoid using in real apps (overwrites)
+
+🎯 Example: Set content dynamically
+<p id="demo"></p>
+<script>
+  document.getElementById("demo").innerHTML = "Hello World!";
+</script>
+
+🎯 Example HTML:
+<body class="bg-black">
+  <div>
+    <h1 id="title" class="heading">
+      DOM learning on Chai aur Code
+      <span style="display:none;">test text</span>
+    </h1>
+
+    <h2>Subheading 1</h2>
+    <h2>Subheading 2</h2>
+    <h2>Subheading 3</h2>
+    
+    <p>This is a paragraph</p>
+    <input type="password" />
+
+    <ul>
+      <li class="list-item">One</li>
+      <li class="list-item">Two</li>
+      <li class="list-item">Three</li>
+      <li class="list-item">Four</li>
+    </ul>
+  </div>
+</body>
+
+✅ Summary:
+- DOM lets JavaScript manipulate HTML content and structure
+- DOM is essential for dynamic and interactive web pages
+- Elements can be selected using ID, class, tag, or CSS selectors
+- Use `.innerHTML`, `.innerText`, `.textContent` carefully depending on needs
+- Classes and styles can be updated dynamically
+- Elements can be added, removed, or modified using DOM methods
+- Events can be handled via addEventListener (explored next)
+-->
+
+
+<!-- ✅ DOM Text Content Properties: innerHTML vs innerText vs textContent -->
+
+<!--
+1️⃣ innerHTML:
+- Returns or sets the HTML content of an element, including tags.
+- Parses and renders any HTML you assign.
+- Allows you to inject elements like <b>, <span>, etc.
+
+Example:
+element.innerHTML = "<b>Hello</b>"; 
+// Displays "Hello" in bold
+
+✅ Use When:
+- You need to insert or read structured HTML inside an element.
+
+❌ Avoid When:
+- Dealing with user-generated input → high risk of XSS attacks.
+-->
+
+<!--
+2️⃣ innerText:
+- Returns or sets the visible text content only.
+- Ignores hidden text (like display: none or visibility: hidden).
+- Triggers layout reflow/rendering when accessed (⚠️ slightly slower).
+
+Example:
+element.innerText = "Visible Text Only";
+// Only visible content is affected and rendered
+
+✅ Use When:
+- You need exactly what the user can visually see on the page.
+-->
+
+<!--
+3️⃣ textContent:
+- Returns or sets the entire text content of an element.
+- Includes hidden text and ignores formatting/HTML tags.
+- Does not trigger reflow, making it the fastest option.
+
+
+ so textcontent is new faster and also changes hidden text
+
+ 
+Example:
+element.textContent = "Raw text content";
+// Adds plain text including hidden parts
+
+✅ Use When:
+- You want all text without worrying about HTML structure or visibility.
+-->
+
+<!--
+📊 Comparison Table:
+
+| Feature         | innerHTML         | innerText           | textContent        |
+|----------------|-------------------|----------------------|--------------------|
+| Includes HTML? | ✅ Yes            | ❌ No                | ❌ No              |
+| Hidden Text?   | ✅ Yes            | ❌ No                | ✅ Yes             |
+| Performance    | ⚠️ Slower        | ⚠️ Slower           | ✅ Fast            |
+| Safe for Input | ❌ No (XSS risk)  | ✅ Yes               | ✅ Yes             |
+| Triggers Reflow| ❌ No             | ✅ Yes               | ❌ No              |
+-->
+
+<!--
+🧪 Practical Example:
+<div id="demo" style="display: none;"><b>Hidden</b> Content</div>
+
+<script>
+  const element = document.getElementById("demo");
+
+  console.log(element.innerHTML);    // "<b>Hidden</b> Content"
+  console.log(element.innerText);    // "" (hidden, so nothing appears)
+  console.log(element.textContent);  // "Hidden Content"
+</script>
+-->
+
+<!--
+✅ Best Practices Summary:
+- Use .innerHTML → when you want to manipulate or inject raw HTML (sanitize it!)
+- Use .innerText → when only visible rendered content matters
+- Use .textContent → for plain, complete text (even hidden), and better performance
+-->

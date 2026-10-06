@@ -1,0 +1,10 @@
+const accountId = 144553; // 'const' is used for fixed the values, can't be change.
+let accountEmail = "saurabh@gmail.com"; // 'let' is used for variable that can be change.
+var accountPassword = "12345"; // 'var' is function scope and should be avoided in modern js code
+accountCity = "Jaipur"; // without anu datatype this creates a global varible(not reccomened) 
+let accountState; //there is no any declaration, it allowed in let.
+
+
+accountId = 12; // erroe: assignment to constant varibale. that it cant be again assign.
+//console.table([accountId, accountEmail, accountPassword, accountCity, accountState]);
+console.log(accountId);

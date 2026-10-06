@@ -1,0 +1,471 @@
+// ✅ EVENTS IN JAVASCRIPT — DETAILED NOTES
+
+/*
+📌 WHAT IS AN EVENT?
+An event is an action or occurrence that happens in the browser that JavaScript can respond to.
+Examples: mouse click, keypress, form submission, page load, etc.
+
+🧠 Events allow developers to write code that reacts to user interactions.
+*/
+
+// ✅ 1. ADDING EVENT LISTENERS
+
+/*
+There are 3 common ways to add events in JavaScript:
+
+1️⃣ Inline Event Handlers (in HTML):
+<button onclick="alert('Clicked!')">Click</button>
+
+2️⃣ HTML DOM Property:
+const btn = document.getElementById("myBtn");
+btn.onclick = function() {
+  alert("Clicked!");
+};
+
+3️⃣ addEventListener (✅ Best Practice):
+btn.addEventListener("click", function() {
+  alert("Clicked!");
+});
+*/
+
+
+
+// Select the first <input> element from the page
+let inp = document.querySelector("input");
+
+// Listen for any input changes (typing, deleting, pasting)
+inp.addEventListener("input", function (dets) {
+    // Logs the last character typed or removed
+    console.log(dets.data);  //when space then null
+
+    // To get the full input text, use: dets.target.value
+});
+
+always try to find the thing you want to changes in details
+
+
+
+// ✅ 2. MOUSE EVENTS
+
+/*
+1️⃣ click — When an element is clicked
+2️⃣ dblclick — When an element is double clicked
+3️⃣ mouseover — When mouse hovers over an element
+4️⃣ mouseout — When mouse leaves the element
+5️⃣ mousedown — When mouse button is pressed
+6️⃣ mouseup — When mouse button is released
+The mousemove event triggers whenever the mouse pointer moves over an element (or the whole window).
+
+
+const cursor = document.querySelector(".cursor");
+    const coords = document.getElementById("coords");
+
+    // Track mouse movement
+    window.addEventListener("mousemove", (e) => {
+      // Move the custom cursor
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+
+      // Update coordinates text
+      coords.textContent = `X: ${e.clientX}, Y: ${e.clientY}`;
+    });
+
+
+      
+*/
+
+// Example:
+const box = document.querySelector(".box");
+box.addEventListener("click", function() {
+  box.style.backgroundColor = "red";
+});
+
+// ✅ 3. KEYBOARD EVENTS
+
+/*
+1️⃣ keydown — When a key is pressed
+2️⃣ keyup — When a key is released
+3️⃣ keypress — When a key is pressed (deprecated)
+*/
+
+
+
+//code  for detecting which key the user presses on the keyboard
+
+
+// Select the first <h1> element on the page
+let h1 = document.querySelector("h1");
+
+// Add an event listener for "keydown" events (fires whenever a key is pressed)
+window.addEventListener("keydown", function (dets) {
+    
+    // `dets.key` gives the key pressed by the user (like 'a', 'Enter', ' ' for space, etc.)
+    
+    // Check if the pressed key is the Spacebar (" ")
+    if (dets.key === " ") {
+        // If spacebar is pressed, set the <h1> text to "SPC"
+        h1.textContent = "SPC";
+    } else {
+        // Otherwise, display the actual key pressed
+        h1.textContent = dets.key;
+    }
+});
+
+
+
+
+// ✅ 4. FORM EVENTS
+
+/*
+1️⃣ submit — When a form is submitted
+2️⃣ focus — When an input gains focus
+3️⃣ blur — When an input loses focus
+4️⃣ change — When value is changed (select, checkbox, etc.)
+*/
+ 
+document.querySelector("form").addEventListener("submit", function(e) {
+  e.preventDefault(); // Prevents actual form submission
+  alert("Form submitted!");
+});
+ 
+// ✅ 5. WINDOW EVENTS
+
+/*
+1️⃣ load — When the page fully loads
+2️⃣ resize — When the browser window is resized
+3️⃣ scroll — When the page is scrolled
+4️⃣ unload — When the page is about to unload
+*/
+
+window.addEventListener("load", function() {
+  console.log("Page loaded!");
+});
+
+
+
+
+/*
+🔹 input event fires every time an input’s value changes (typing, pasting, deleting).
+🔹 Works on <input>, <textarea>, and contenteditable elements.
+🔹 Fires immediately (unlike 'change', which waits for blur).
+
+🔹 Syntax:
+element.addEventListener("input", (e) => {
+  console.log(e.target.value); // current input value
+});
+
+🔹 Example: Live character count
+input.addEventListener("input", (e) => {
+  count.textContent = "Length: " + e.target.value.length;
+});
+
+// ✅ 6. EVENT OBJECT (e)
+
+/*
+Every event listener gets an event object as argument that contains information like:
+- e.type → type of event
+- e.target → the element that triggered the event
+- e.key → the key pressed (for keyboard events)
+- e.clientX / e.clientY → mouse coordinates
+*/
+
+//this e is the event object
+document.addEventListener("click", function(e) {
+  console.log("Clicked on:", e.target.tagName);
+}); 
+
+// ✅ 7. THIS KEYWORD
+
+/*
+Inside event handlers:
+- In regular function, `this` refers to the element on which event was bound.
+- In arrow functions, `this` does NOT refer to element (lexical scope).
+*/
+
+const para = document.querySelector("p");
+para.addEventListener("click", function() {
+  this.style.color = "red"; // turns paragraph red when clicked
+});
+
+// ✅ 8. EVENT BUBBLING VS CAPTURING
+
+/*
+📌 Bubbling: Event goes from target up to ancestors.
+"If an event occurs on an element and that element doesn’t have an 
+event listener, the event will look for a listener on its parent, and 
+keep moving upward (towards ancestors) until it finds one."
+
+  <!-- <script>
+    // Event listener only on parent
+    document.getElementById("parent").addEventListener("click", () => {
+      alert("Parent Div Clicked (Bubbling)");
+    }); -->
+
+📌 Capturing: Event goes from top (root) down to the target.
+
+By default, JavaScript uses **bubbling**.
+To use capturing, pass `true` in addEventListener.
+*/
+
+document.body.addEventListener("click", function() {
+  console.log("Body clicked");
+}, true); // Capturing
+
+
+
+// Event Bubbling (Default):
+// - If an event (e.g., 'click') occurs on a child element and that element has no event listener,
+//   the event bubbles upward to its parent, then grandparent, and so on, 
+//   until it finds a listener or reaches the `document`/`window`.
+// - Flow: Target → Parent → Ancestors (upward).
+
+
+// Case: Child element has its own event listener
+// - The event triggers the child's listener first (because the event starts at the target).
+// - After executing the child's listener, the event *continues bubbling* up the DOM tree,
+//   triggering any listeners on parent elements (unless you stop it).
+
+// Example behavior:
+// 1. Child's event listener runs.
+// 2. Then, parent's listener runs (if it exists).
+// 3. Continues up to ancestors (grandparent, document, window).
+// 4. You can stop it using event.stopPropagation() to prevent further bubbling.
+
+
+
+
+
+// Event Capturing (Trickle Down):
+// - If you enable capturing (`addEventListener(event, handler, true)`),
+//   the event travels from the top (`window`/`document`) down through ancestors,
+//   checking for listeners before it reaches the target.
+// - Flow: Document/Window → Ancestors → Target (downward)
+
+
+
+//When you pass true as the third argument in:
+
+<!-- element.addEventListener("click", handler, true);
+The event listener is attached in the capturing phase (Phase 1).
+
+So, capturing listeners run first, as the event moves from the top (window/document) down to the target element.
+
+After capturing, the bubbling phase runs (Phase 2), where normal listeners (default false) trigger as the event travels upward. -->
+
+
+<!-- Example:
+
+document.body.addEventListener("click", () => console.log("Body Capturing"), true); // Capturing
+document.body.addEventListener("click", () => console.log("Body Bubbling"));       // Bubbling
+Clicking anywhere inside body will log:
+
+output
+Body Capturing
+Body Bubbling -->
+
+// ✅ 9. STOP PROPAGATION
+
+/*
+Used to stop event from bubbling up or capturing down.
+Useful when you don't want parent handlers to fire.
+*/
+
+document.querySelector(".child").addEventListener("click", function(e) {
+  e.stopPropagation();
+  console.log("Child clicked, not bubbling up!");
+});
+
+// ✅ 10. EVENT DELEGATION
+
+/*
+Event delegation is the practice of adding a single event listener to a parent element instead of each child element.
+Useful when you have dynamic content.
+*/
+
+document.querySelector(".parent").addEventListener("click", function(e) {
+  if (e.target.tagName === "BUTTON") {
+    alert("Button " + e.target.textContent + " clicked!");
+  }
+});
+
+// ✅ 11. REMOVING EVENT LISTENERS
+
+/*
+You can remove an event listener using `removeEventListener`. The function passed should be a named function.
+*/
+
+function greet() {
+  alert("Hello!");
+}
+
+const btn2 = document.querySelector("#btn2");
+btn2.addEventListener("click", greet);
+btn2.removeEventListener("click", greet); // will remove
+
+// ✅ 12. COMMON INTERVIEW/EXAM Qs BASED ON EVENTS:
+
+/*
+Q1: What is the difference between event bubbling and capturing?
+Q2: What does stopPropagation() do?
+Q3: What is event delegation and why is it useful?
+Q4: Difference between onclick and addEventListener?
+Q5: How can you prevent form from submitting?
+Q6: Can you attach multiple events to same element?
+Q7: What is the difference between e.target and e.currentTarget?
+Q8: How do arrow functions behave differently inside event handlers?
+*/
+
+// ✅ PRACTICAL TASK: CLICK PARAGRAPH TO TURN RED
+
+const p = document.querySelector("p");
+p.addEventListener("click", function() {
+  this.style.color = "red"; // turns paragraph red when clicked
+});
+
+// ✅ SUMMARY
+
+/*
+✔ Events are user actions JS can respond to.
+✔ Use addEventListener for best flexibility.
+✔ Know the main types: mouse, keyboard, form, window.
+✔ Understand bubbling, capturing, stopPropagation.
+✔ Use delegation for efficient dynamic content handling.
+✔ Master event object properties and `this` behavior.
+*/
+
+
+/*
+👨‍🏫 Q1: What is the difference between Event Bubbling and Event Capturing?
+
+🔹 Event Bubbling:
+- The event starts from the target element and bubbles up to its ancestors (child → parent → grandparent).
+- Default behavior in most browsers.
+- You handle events closer to the bottom of the DOM.
+
+🔹 Event Capturing (Trickling):
+- The event starts from the root and trickles down to the target element (grandparent → parent → child).
+- Requires `addEventListener` with the third argument set to `true`.
+
+Example:
+document.getElementById("child").addEventListener("click", fn, false); // bubbling
+document.getElementById("child").addEventListener("click", fn, true);  // capturing
+*/
+
+
+/*
+👨‍🏫 Q2: What does stopPropagation() do?
+
+🔹 `stopPropagation()` prevents the event from bubbling up or capturing down further in the DOM tree.
+- Used when you don’t want the parent elements to be notified of the event.
+
+Example:
+child.addEventListener("click", function(e) {
+  e.stopPropagation(); // Event stops here
+  console.log("Child clicked");
+});
+*/
+
+
+/*
+👨‍🏫 Q3: What is Event Delegation and Why is it Useful?
+
+🔹 Event Delegation is a technique where a single event listener is added to a parent element
+  instead of multiple listeners on each child.
+
+✅ Benefits:
+- Memory efficient.
+- Works with dynamically added elements.
+
+Example:
+document.getElementById("list").addEventListener("click", function(e) {
+  if (e.target.tagName === "LI") {
+    console.log("Clicked:", e.target.textContent);
+  }
+});
+*/
+
+
+/*
+👨‍🏫 Q4: Difference between onclick and addEventListener?
+
+🔹 onclick:
+- Overwrites any previously assigned onclick handlers.
+- Limited to one handler.
+
+🔹 addEventListener:
+- Can attach multiple handlers.
+- Allows use of options like `capture`, `once`, `passive`.
+
+Example:
+elem.onclick = () => alert("clicked1");    // only one
+elem.onclick = () => alert("clicked2");    // overwrites previous
+
+elem.addEventListener("click", () => alert("clicked1"));
+elem.addEventListener("click", () => alert("clicked2")); // both will work
+*/
+
+
+/*
+👨‍🏫 Q5: How can you prevent a form from submitting?
+
+🔹 Use `event.preventDefault()` in the form's submit event to stop default behavior.
+
+Example:
+document.querySelector("form").addEventListener("submit", function(e) {
+  e.preventDefault(); // stops form submission
+  alert("Form validation failed!");
+});
+*/
+
+
+/*
+👨‍🏫 Q6: Can you attach multiple events to the same element?
+
+✅ Yes, using `addEventListener`, you can add multiple event types or handlers to the same element.
+
+Example:
+const btn = document.getElementById("btn");
+
+btn.addEventListener("click", () => console.log("Clicked"));
+btn.addEventListener("mouseover", () => console.log("Hovered"));
+*/
+
+
+/*
+👨‍🏫 Q7: What is the difference between e.target and e.currentTarget?
+
+🔹 e.target:
+- Refers to the actual DOM element that triggered the event.
+- It can be a child element.
+
+🔹 e.currentTarget:
+- Refers to the element on which the event listener is attached.
+
+Example:
+<div id="parent">
+  <button id="child">Click me</button>
+</div>
+
+parent.addEventListener("click", function(e) {
+  console.log("target:", e.target);       // might be the button
+  console.log("currentTarget:", e.currentTarget); // always parent
+});
+*/
+
+
+/*
+👨‍🏫 Q8: How do arrow functions behave differently inside event handlers?
+
+🔹 Arrow functions do **not bind their own `this`**. 
+- They inherit `this` from the parent scope.
+- Inside an arrow function used in an event, `this` won't refer to the element.
+
+Example:
+button.addEventListener("click", () => {
+  console.log(this); // likely 'window' or outer context, not button
+});
+
+button.addEventListener("click", function() {
+  console.log(this); // refers to button element
+});
+*/

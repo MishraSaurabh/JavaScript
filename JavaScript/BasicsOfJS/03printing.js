@@ -1,0 +1,8 @@
+console.log("Saurabh") //used for printing in js
+console.table(["saurabh", "ram"])// another method to print like table, if more then one variable is print with same line.
+ProcessingInstruction.stdout.write("saurabh")// not working but its also a method to write. 
+
+//mostly we use 1st and 2nd option.
+
+
+

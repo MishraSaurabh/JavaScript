@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chai aur Code | DOM</title>
+</head>
+<body style="background-color: #212121; color: #fff;">
+  <!-- 🔹 List of programming languages -->
+  <ul class="language">
+    <li>Javascript</li>
+  </ul>
+</body>
+
+<script>
+  // ✅ Function to add a new language using innerHTML
+  function addLanguage(langName) {
+    const li = document.createElement('li'); // Create a new <li> element
+    li.innerHTML = `${langName}`; // Insert text as HTML (not safe for user input)
+    document.querySelector('.language').appendChild(li); // Append it to the <ul>
+  }
+
+  addLanguage("Python");       // Adds: <li>Python</li>
+  addLanguage("TypeScript");   // Adds: <li>TypeScript</li>
+
+  // ✅ Function to add a new language using text node (optimized and safer)
+  function addOptiLanguage(langName) {
+    const li = document.createElement('li'); // Create a new <li> element
+    li.appendChild(document.createTextNode(langName)); // Adds plain text safely
+    document.querySelector('.language').appendChild(li); // Append it to the list
+  }
+
+  addOptiLanguage("Golang"); // Adds: <li>Golang</li>
+
+  /*
+    ⚠️ Why prefer createTextNode over innerHTML?
+    - Safer: Prevents Cross-Site Scripting (XSS) attacks.
+    - Faster: Avoids HTML parsing.
+    - Cleaner: Handles plain text accurately.
+    - Use innerHTML only when inserting valid HTML intentionally (e.g., <strong>, <em>).
+  */
+
+  // ✅ Replace the second <li> (Python) with a new language: Mojo
+  const secondLang = document.querySelector("li:nth-child(2)"); // Selects 2nd <li>
+  const newLi = document.createElement("li"); // Create a new <li>
+  newLi.textContent = "Mojo"; // Set its content
+  secondLang.replaceWith(newLi); // Replace <li>Python</li> → <li>Mojo</li>
+
+  // ✅ Replace the first <li> (Javascript) entirely using outerHTML
+  const firstLang = document.querySelector("li:first-child");
+  firstLang.outerHTML = "<li>TypeScript</li>"; 
+  // Fully replaces the <li>Javascript</li> with <li>TypeScript</li>
+
+  // ✅ Remove the last language (Golang)
+  const lastLang = document.querySelector("li:last-child"); 
+  lastLang.remove(); 
+  // Removes <li>Golang</li> from the DOM
+</script>
+
+<!-- ✅ Summary of Important Points:
+
+1. document.createElement('li')
+   → Dynamically creates a new HTML element.
+
+2. innerHTML vs createTextNode:
+   - innerHTML: Accepts HTML string (⚠️ not safe for user input).
+   - createTextNode: Adds safe plain text (✅ preferred for security).
+
+3. appendChild()
+   → Appends a node as the last child of a parent node (adds to DOM).
+
+4. replaceWith()
+   → Replaces an existing element with a new element node.
+
+5. outerHTML
+   → Completely replaces an element including its tag and content.
+
+6. remove()
+   → Removes an element from the DOM.
+
+7. querySelector with pseudo-classes like:
+   - :first-child → Selects the first child
+   - :nth-child(n) → Selects the nth child
+   - :last-child → Selects the last child
+
+8. All methods combined enable you to build and edit dynamic, interactive webpages.
+
+-->
+
+<!-- 🔍 Element Content Methods Recap:
+
+innerHTML → Inserts or reads HTML content (including tags)
+outerHTML → Replaces the entire element (including its tag)
+textContent → Inserts or reads plain text (ignores tags)
+-->
+</html>
